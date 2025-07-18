@@ -64,7 +64,7 @@ app.post('/send-emails', async (req, res) => {
       // 🎯 Focus "To" field
       await page.waitForSelector('.select2-choices', { visible: true });
       await page.click('.select2-choices');
-      await new Promise(r => setTimeout(r, 500));
+      await new Promise(resolve => setTimeout(resolve, 500));
 
       // 🧹 Spam backspace to remove all contacts
       for (let i = 0; i < 50; i++) {
@@ -72,20 +72,19 @@ app.post('/send-emails', async (req, res) => {
         await new Promise(resolve => setTimeout(resolve, 30));
       }
 
-
       // ➕ Type new billing email
       await page.waitForSelector('.select2-search-field input', { visible: true });
       await page.type('.select2-search-field input', billingEmail);
       await page.keyboard.press('Enter');
       console.log(`📧 Entered Billing Contact: ${billingEmail}`);
 
-      // 🧾 Select Email Template
+      // 🧾 Select Email Template (your originally working method, now using "90 Days")
       await page.waitForSelector('#s2id_customForms .select2-choice', { visible: true });
       await page.click('#s2id_customForms .select2-choice');
       await page.waitForSelector('.select2-drop-active .select2-search input', { visible: true });
       await page.type('.select2-drop-active .select2-search input', '30 Days Past Due');
       await page.keyboard.press('Enter');
-      console.log('✅ Selected template: 30 Days Past Due');
+      console.log('✅ Template "30 Days Past Due" selected.');
 
       // 🚀 Send Email
       await new Promise(resolve => setTimeout(resolve, 1000));
